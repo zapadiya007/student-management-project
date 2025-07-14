@@ -4,6 +4,7 @@ import { VitePWA } from "vite-plugin-pwa";
 
 // https://vite.dev/config/
 export default defineConfig({
+  base: "/student-management-project/",
   plugins: [
     react(),
     VitePWA({
@@ -13,7 +14,8 @@ export default defineConfig({
         short_name: "MyPWA",
         description: "A powerful PWA built with React and Vite",
         orientation: "portrait",
-        start_url: "/",
+        start_url: "/student-management-project/",
+        scope: "/student-management-project/",
         display: "standalone",
         background_color: "#ffffff",
         theme_color: "#000000",
