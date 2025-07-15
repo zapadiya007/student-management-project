@@ -23,12 +23,12 @@ export default defineConfig(({ mode }) => ({
         theme_color: "#000000",
         icons: [
           {
-            src: "vite.svg",
+            src: "road.png",
             sizes: "192x192",
             type: "image/png",
           },
           {
-            src: "vite.svg",
+            src: "road.png",
             sizes: "512x512",
             type: "image/png",
           },
