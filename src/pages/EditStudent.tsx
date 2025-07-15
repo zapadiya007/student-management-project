@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
 import { ArrowLeft, Save, Calendar, MapPin, Upload } from "lucide-react";
@@ -7,10 +6,20 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Calendar as CalendarComponent } from "@/components/ui/calendar";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
 import { useToast } from "@/hooks/use-toast";
@@ -20,7 +29,7 @@ const EditStudent = () => {
   const { id } = useParams();
   const { toast } = useToast();
   const [date, setDate] = useState<Date>();
-  
+
   const [formData, setFormData] = useState({
     fullName: "",
     dateOfBirth: "",
@@ -46,7 +55,7 @@ const EditStudent = () => {
       parentContact: "+91 98765 43210",
       parentOccupation: "Farmer",
     };
-    
+
     setFormData(mockStudent);
     if (mockStudent.dateOfBirth) {
       setDate(new Date(mockStudent.dateOfBirth));
@@ -55,12 +64,16 @@ const EditStudent = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
-    if (!formData.fullName || !formData.educationLevel || !formData.schoolName) {
+
+    if (
+      !formData.fullName ||
+      !formData.educationLevel ||
+      !formData.schoolName
+    ) {
       toast({
         title: "Validation Error",
         description: "Please fill in all required fields.",
-        variant: "destructive"
+        variant: "destructive",
       });
       return;
     }
@@ -69,17 +82,37 @@ const EditStudent = () => {
       title: "Success!",
       description: "Student record has been updated successfully.",
     });
-    
+
     navigate("/students");
   };
 
   const educationLevels = [
-    "1st Standard", "2nd Standard", "3rd Standard", "4th Standard", "5th Standard",
-    "6th Standard", "7th Standard", "8th Standard", "9th Standard", "10th Standard",
-    "11th Standard", "12th Standard",
-    "Diploma", "B.A", "B.Sc", "B.Com", "B.Tech", "B.E",
-    "M.A", "M.Sc", "M.Com", "M.Tech", "M.E", "MBA",
-    "Ph.D", "Post Doctorate"
+    "1st Standard",
+    "2nd Standard",
+    "3rd Standard",
+    "4th Standard",
+    "5th Standard",
+    "6th Standard",
+    "7th Standard",
+    "8th Standard",
+    "9th Standard",
+    "10th Standard",
+    "11th Standard",
+    "12th Standard",
+    "Diploma",
+    "B.A",
+    "B.Sc",
+    "B.Com",
+    "B.Tech",
+    "B.E",
+    "M.A",
+    "M.Sc",
+    "M.Com",
+    "M.Tech",
+    "M.E",
+    "MBA",
+    "Ph.D",
+    "Post Doctorate",
   ];
 
   return (
@@ -87,17 +120,11 @@ const EditStudent = () => {
       {/* Header */}
       <div className="rural-gradient border-b border-border">
         <div className="container mx-auto px-6 py-6">
-          <div className="flex items-center gap-4">
-            <Link to="/students">
-              <Button variant="ghost" size="sm">
-                <ArrowLeft className="h-4 w-4 mr-2" />
-                Back to Directory
-              </Button>
-            </Link>
-            <div>
-              <h1 className="text-2xl font-bold text-foreground">Edit Student</h1>
-              <p className="text-muted-foreground">Update student details and information</p>
-            </div>
+          <div>
+            <h1 className="text-2xl font-bold text-foreground">Edit Student</h1>
+            <p className="text-muted-foreground">
+              Update student details and information
+            </p>
           </div>
         </div>
       </div>
@@ -116,7 +143,9 @@ const EditStudent = () => {
                   <Input
                     id="fullName"
                     value={formData.fullName}
-                    onChange={(e) => setFormData({...formData, fullName: e.target.value})}
+                    onChange={(e) =>
+                      setFormData({ ...formData, fullName: e.target.value })
+                    }
                     placeholder="Enter student's full name"
                     required
                   />
@@ -153,7 +182,9 @@ const EditStudent = () => {
                   <Label>Gender</Label>
                   <RadioGroup
                     value={formData.gender}
-                    onValueChange={(value) => setFormData({...formData, gender: value})}
+                    onValueChange={(value) =>
+                      setFormData({ ...formData, gender: value })
+                    }
                     className="flex gap-6 mt-2"
                   >
                     <div className="flex items-center space-x-2">
@@ -181,9 +212,11 @@ const EditStudent = () => {
               <CardContent className="space-y-4">
                 <div>
                   <Label htmlFor="educationLevel">Education Level *</Label>
-                  <Select 
+                  <Select
                     value={formData.educationLevel}
-                    onValueChange={(value) => setFormData({...formData, educationLevel: value})}
+                    onValueChange={(value) =>
+                      setFormData({ ...formData, educationLevel: value })
+                    }
                   >
                     <SelectTrigger>
                       <SelectValue placeholder="Select education level" />
@@ -203,7 +236,9 @@ const EditStudent = () => {
                   <Input
                     id="schoolName"
                     value={formData.schoolName}
-                    onChange={(e) => setFormData({...formData, schoolName: e.target.value})}
+                    onChange={(e) =>
+                      setFormData({ ...formData, schoolName: e.target.value })
+                    }
                     placeholder="Enter school or college name"
                     required
                   />
@@ -214,7 +249,9 @@ const EditStudent = () => {
                   <Textarea
                     id="address"
                     value={formData.address}
-                    onChange={(e) => setFormData({...formData, address: e.target.value})}
+                    onChange={(e) =>
+                      setFormData({ ...formData, address: e.target.value })
+                    }
                     placeholder="Enter complete address"
                     rows={3}
                   />
@@ -244,7 +281,9 @@ const EditStudent = () => {
                   <Input
                     id="parentName"
                     value={formData.parentName}
-                    onChange={(e) => setFormData({...formData, parentName: e.target.value})}
+                    onChange={(e) =>
+                      setFormData({ ...formData, parentName: e.target.value })
+                    }
                     placeholder="Enter parent or guardian name"
                   />
                 </div>
@@ -254,7 +293,12 @@ const EditStudent = () => {
                   <Input
                     id="parentContact"
                     value={formData.parentContact}
-                    onChange={(e) => setFormData({...formData, parentContact: e.target.value})}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        parentContact: e.target.value,
+                      })
+                    }
                     placeholder="+91 XXXXX XXXXX"
                   />
                 </div>
@@ -264,7 +308,12 @@ const EditStudent = () => {
                   <Input
                     id="parentOccupation"
                     value={formData.parentOccupation}
-                    onChange={(e) => setFormData({...formData, parentOccupation: e.target.value})}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        parentOccupation: e.target.value,
+                      })
+                    }
                     placeholder="Enter occupation"
                   />
                 </div>
