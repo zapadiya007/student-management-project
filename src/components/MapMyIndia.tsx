@@ -1,5 +1,4 @@
-
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from "react";
 
 declare global {
   interface Window {
@@ -20,12 +19,12 @@ interface MapMyIndiaProps {
   }>;
 }
 
-export function MapMyIndia({ 
-  className = "w-full h-64", 
-  onLocationSelect, 
-  center = { lat: 28.6139, lng: 77.2090 }, 
+export function MapMyIndia({
+  className = "w-full h-64",
+  onLocationSelect,
+  center = { lat: 28.6139, lng: 77.209 },
   zoom = 10,
-  markers = []
+  markers = [],
 }: MapMyIndiaProps) {
   const mapRef = useRef<HTMLDivElement>(null);
   const mapInstance = useRef<any>(null);
@@ -44,27 +43,27 @@ export function MapMyIndia({
             traffic: true,
             geolocation: true,
             clickableIcons: true,
-            backgroundColor: '#f8f9fa'
+            backgroundColor: "#f8f9fa",
           });
 
           // Add markers if provided
-          markers.forEach(marker => {
+          markers.forEach((marker) => {
             const mapMarker = new window.mappls.Marker({
               map: mapInstance.current,
               position: [marker.lat, marker.lng],
-              title: marker.title || '',
+              title: marker.title || "",
               icon: {
-                url: 'https://apis.mapmyindia.com/map_v3/1.3/images/2x/pinlet_red.png',
-                size: { width: 32, height: 32 }
-              }
+                url: "https://apis.mapmyindia.com/map_v3/1.3/images/2x/pinlet_red.png",
+                size: { width: 32, height: 32 },
+              },
             });
 
             if (marker.description) {
               const infoWindow = new window.mappls.InfoWindow({
-                content: marker.description
+                content: marker.description,
               });
-              
-              mapMarker.addListener('click', () => {
+
+              mapMarker.addListener("click", () => {
                 infoWindow.open(mapInstance.current, mapMarker);
               });
             }
@@ -72,31 +71,34 @@ export function MapMyIndia({
 
           // Handle map clicks for location selection
           if (onLocationSelect) {
-            mapInstance.current.addListener('click', (event: any) => {
+            mapInstance.current.addListener("click", (event: any) => {
               const lat = event.latLng.lat();
               const lng = event.latLng.lng();
               onLocationSelect(lat, lng);
             });
           }
         } catch (error) {
-          console.error('Error initializing MapMyIndia map:', error);
+          console.error("Error initializing MapMyIndia map:", error);
         }
       }
     };
 
     // Load MapMyIndia script if not already loaded
     if (!scriptLoaded.current) {
-      const script = document.createElement('script');
-      script.src = 'https://apis.mapmyindia.com/advancedmaps/v1/YOUR_API_KEY/map_load?v=1.5';
+      const script = document.createElement("script");
+      script.src =
+        "https://apis.mapmyindia.com/advancedmaps/v1/YOUR_API_KEY/map_load?v=1.5";
       script.async = true;
-      
+
       script.onload = () => {
         scriptLoaded.current = true;
         initializeMap();
       };
 
       script.onerror = () => {
-        console.error('Failed to load MapMyIndia script. Please check your API key.');
+        console.error(
+          "Failed to load MapMyIndia script. Please check your API key."
+        );
       };
 
       document.head.appendChild(script);
@@ -109,14 +111,16 @@ export function MapMyIndia({
         try {
           mapInstance.current.remove();
         } catch (error) {
-          console.error('Error removing map:', error);
+          console.error("Error removing map:", error);
         }
       }
     };
   }, [center, zoom, markers, onLocationSelect]);
 
   return (
-    <div className={`${className} rounded-lg overflow-hidden border border-border relative`}>
+    <div
+      className={`${className} rounded-lg overflow-hidden border border-border relative`}
+    >
       <div ref={mapRef} className="w-full h-full" />
       <div className="absolute top-2 left-2 bg-white/90 backdrop-blur-sm rounded-lg p-2 text-xs text-muted-foreground z-10">
         Powered by MapMyIndia

@@ -1,6 +1,14 @@
-
 import { NavLink, useLocation } from "react-router-dom";
-import { GraduationCap, Users, UserPlus, BarChart3, Home, Menu } from "lucide-react";
+import {
+  GraduationCap,
+  Users,
+  UserPlus,
+  BarChart3,
+  Home,
+  Menu,
+  Building2,
+  Settings,
+} from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
@@ -16,27 +24,38 @@ import {
 } from "@/components/ui/sidebar";
 import { Button } from "@/components/ui/button";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { OrganizationSwitcher } from "./OrganizationSwitcher";
 
 const navigationItems = [
   {
     title: "Dashboard",
     url: "/",
     icon: Home,
+    roles: ["super_admin", "org_user", "end_user"],
   },
   {
     title: "Student Directory",
     url: "/students",
     icon: Users,
+    roles: ["super_admin", "org_user"],
   },
   {
     title: "Add Student",
     url: "/add-student",
     icon: UserPlus,
+    roles: ["super_admin", "org_user"],
   },
   {
     title: "Analytics",
     url: "/analytics",
     icon: BarChart3,
+    roles: ["super_admin", "org_user"],
+  },
+  {
+    title: "Organization",
+    url: "/organization",
+    icon: Building2,
+    roles: ["super_admin", "org_user"],
   },
 ];
 
@@ -45,6 +64,9 @@ export function AppSidebar() {
   const location = useLocation();
   const isMobile = useIsMobile();
   const isCollapsed = state === "collapsed";
+
+  // Mock user role - will be replaced with real data from Supabase
+  const userRole = "org_user";
 
   const isActive = (path: string) => {
     if (path === "/") {
@@ -61,6 +83,10 @@ export function AppSidebar() {
       setOpenMobile(false);
     }
   };
+
+  const filteredNavigationItems = navigationItems.filter((item) =>
+    item.roles.includes(userRole)
+  );
 
   return (
     <>
@@ -85,11 +111,23 @@ export function AppSidebar() {
             </div>
             {!isCollapsed && (
               <div>
-                <h2 className="text-lg font-bold text-sidebar-foreground">Village SMS</h2>
-                <p className="text-xs text-sidebar-foreground/70">Student Management System</p>
+                <h2 className="text-lg font-bold text-sidebar-foreground">
+                  Village SMS
+                </h2>
+                <p className="text-xs text-sidebar-foreground/70">
+                  Student Management System
+                </p>
               </div>
             )}
           </div>
+
+          {/* Organization Switcher */}
+          {!isCollapsed && (
+            <div className="px-4 pb-4">
+              <OrganizationSwitcher />
+            </div>
+          )}
+
           {!isMobile && <SidebarTrigger className="ml-auto mr-4 mb-2" />}
         </SidebarHeader>
 
@@ -98,11 +136,11 @@ export function AppSidebar() {
             <SidebarGroupLabel>Main Navigation</SidebarGroupLabel>
             <SidebarGroupContent>
               <SidebarMenu>
-                {navigationItems.map((item) => (
+                {filteredNavigationItems.map((item) => (
                   <SidebarMenuItem key={item.title}>
                     <SidebarMenuButton asChild>
-                      <NavLink 
-                        to={item.url} 
+                      <NavLink
+                        to={item.url}
                         onClick={handleNavClick}
                         className={({ isActive: navIsActive }) =>
                           `flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all duration-200 ${
