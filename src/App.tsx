@@ -13,6 +13,8 @@ import EditStudent from "./pages/EditStudent";
 import StudentProfile from "./pages/StudentProfile";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
+import OrganizationSelection from "./pages/OrganizationSelection";
+import OrganizationManagement from "./pages/OrganizationManagement";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -30,6 +32,10 @@ const App = () => {
             {/* Authentication Routes */}
             <Route path="/signin" element={<SignIn />} />
             <Route path="/signup" element={<SignUp />} />
+            <Route
+              path="/organization-selection"
+              element={<OrganizationSelection />}
+            />
 
             {/* Protected Routes with Sidebar */}
             <Route
@@ -56,6 +62,10 @@ const App = () => {
                           element={<StudentProfile />}
                         />
                         <Route path="/analytics" element={<Dashboard />} />
+                        <Route
+                          path="/organization"
+                          element={<OrganizationManagement />}
+                        />
                         <Route path="*" element={<NotFound />} />
                       </Routes>
                     </main>
