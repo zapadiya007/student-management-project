@@ -6,13 +6,14 @@ import { VitePWA } from "vite-plugin-pwa";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
+  base: "/student-management-project/",
   plugins: [
     react(),
     VitePWA({
       registerType: "autoUpdate",
       manifest: {
-        name: "My PWA App",
-        short_name: "MyPWA",
+        name: "Student Management Project",
+        short_name: "MyApp",
         description: "A powerful PWA built with React and Vite",
         orientation: "portrait",
         start_url: "/student-management-project/",
